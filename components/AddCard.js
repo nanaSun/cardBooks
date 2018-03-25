@@ -3,12 +3,38 @@ import { View,Text,TextInput,FlatList,Dimensions ,TouchableOpacity} from 'react-
 import styled from 'styled-components'
 import { addCard } from '../actions/'
 import { connect } from 'react-redux'
-import { addCard as saveNewCard } from '../utils/api'
+import { addCardToDeck } from '../utils/api'
+import { backgroundRadomColors,textRadomColors } from '../utils/colors'
+import { winHeight,winWidth,timeStamp } from '../utils/helpers'
+
 const TitleInput = styled.TextInput`
-    width:200px;
+    width:${winWidth*0.8}px;
     height:44px;
-    color:#000;
+    padding:0 20px;
+    border-radius:4px;
+    fontSize:20px;
+    marginBottom:30px;
+    border:1px solid #333;
+    color:#666;
 `;
+
+const TitleText= styled.Text`
+	width:${winWidth*0.8}px;
+    fontSize:${winWidth/20}px;
+    marginBottom:30px;
+`
+const Btn = styled.TouchableOpacity`
+	width:${winWidth*0.3}px;
+    height:44px;
+    background:#333;
+    border-radius:10px;
+`
+const TextBtn = styled.Text`
+	textAlign:center;
+    fontSize:20px;
+    line-height:44px;
+    color:#fff;
+`
 class AddCard extends React.Component {
 	state={
 		question:"",
@@ -28,20 +54,17 @@ class AddCard extends React.Component {
 		let _=this;
 		if(_.state.question!==""&&_.state.answer!==""){
 			let newCard={
-				id:_.props.id,
-				key:_.state.question,
+                timestamp:timeStamp(),
 				question:_.state.question,
 				answer:_.state.answer
 			}
-			saveNewCard(newCard,()=>{
-				_.props.addCard(newCard)
+			addCardToDeck(_.props.id,newCard,(data)=>{
+				_.props.addCard(_.props.id,data)
 				_.props.navigation.navigate(
 					'DeckDetail',
                     { id: _.props.id }
                 )
 			})
-			
-			
 		}
 	}
     render(){
@@ -49,30 +72,29 @@ class AddCard extends React.Component {
         return (
         
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>ADD NEW card</Text>
-            <TextInput 
+            <TitleText>Add a new Quiz</TitleText>
+            <TitleInput 
             	placeholder={"new question"} 
             	value={question} 
             	onChangeText={this.writeQuestion}
             />
-            <TextInput 
+            <TitleInput 
             	placeholder={"new answer"} 
             	value={answer} 
             	onChangeText={this.writeAnswer}
             />
-            <TouchableOpacity onPress={()=>this.addCard()}><Text>SUBMIT</Text></TouchableOpacity>
+            <Btn onPress={()=>this.addCard()}><TextBtn>SUBMIT</TextBtn></Btn>
         </View>
         )
     }
 }
 function mapStateToProps (state,{navigation}) {
   	const { id } = navigation.state.params
-  	console.log(id)
 	return { id }
 }
 function mapDispatchToProps(dispatch){
   return {
-    addCard:(card)=>dispatch(addCard(card))
+    addCard:(id,card)=>dispatch(addCard(id,card))
   }
 }
 

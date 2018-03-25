@@ -9,16 +9,19 @@ export function receiveDeck (decks) {
 	}
 }
 
-export function addDeck (deck) {
+export function addDeck (key,title,timestamp) {
 	return {
 		type: ADD_DECK,
-		deck,
+		key,
+		title,
+		timestamp
 	}
 }
 
-export function addCard (card) {
+export function addCard (id,card) {
 	return {
 		type: ADD_CARD,
+		id,
 		card,
 	}
 }

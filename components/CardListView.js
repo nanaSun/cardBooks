@@ -2,20 +2,21 @@ import React from 'react'
 import { View,Text,FlatList,Dimensions,TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-
-const winHeight = Dimensions.get('window').height
-const winWidth = Dimensions.get('window').width
-const ListItem = styled.Text`
+import { backgroundRadomColors,textRadomColors } from '../utils/colors'
+import { winHeight,
+        winWidth,
+        timeFormat
+        } from '../utils/helpers'
+const ListItem = styled.View`
     width:${winWidth}px;
     background: rgb(${props=>props.backgroundColor});
-    height:${winHeight/5}px;
-    lineHeight:${winHeight/5}px;
-    fontSize:${winHeight/25}px;
+    padding: ${winHeight/25}px;
+`;
+const ListItemText=styled.Text`
+    fontSize:18px;
     textAlign:center;
     color:rgb(${props=>props.textColor});
 `;
-const backgroundRadomColors=['238,134,154','252,213,129','255,251,198','247,201,221','125,205,244']
-const textRadomColors=['252,213,129','238,134,154','125,205,244','255,251,198','247,201,221']
 class CardListView extends React.Component {
     render() {
         let {cards}=this.props
@@ -24,9 +25,12 @@ class CardListView extends React.Component {
                 <FlatList
                 data={cards}
                 renderItem={({item,index})=><ListItem
-                    textColor={textRadomColors[index%5]} 
                     backgroundColor={backgroundRadomColors[index%5]}
-                    >{item.question}-{item.answer}</ListItem>}
+                    >
+                    <ListItemText textColor={textRadomColors[index%5]} >Modified time:{timeFormat(item.timestamp)}</ListItemText>
+                    <ListItemText textColor={textRadomColors[index%5]} >Q:{item.question}</ListItemText>
+                    <ListItemText textColor={textRadomColors[index%5]} >A:{item.answer}</ListItemText>
+                    </ListItem>}
                 ></FlatList>
             </View>
         );

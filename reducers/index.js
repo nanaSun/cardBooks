@@ -9,16 +9,21 @@ function decks (state = {}, action) {
     case ADD_DECK :
       return {
         ...state,
-        [action.deck.title]:action.deck
+        [action.key]:{
+          timestamp:action.timestamp,
+          title:action.title,
+          questions:[]
+        }
       }
     case ADD_CARD :
       return {
         ...state,
-        [action.card.id]:{
-          ...state[action.card.id],
+        [action.id]:{
+          ...state[action.id],
           questions:[
-            ...state[action.card.id].questions,
+            ...state[action.id].questions,
             {
+              timestamp:action.card.timestamp,
               key:action.card.key,
               question: action.card.question,
               answer: action.card.answer
