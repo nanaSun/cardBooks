@@ -63,21 +63,13 @@ const AnswerBar = styled.View`
     flex-direction:row;
     zIndex:10;
 `;
-const YesBtn = styled.Text`
+const ConfirmBtn = styled.Text`
     width:50%;
     fontSize:24px;
     padding:10px 0;
     textAlign:center;
     color:white;
     backgroundColor:red;
-`;
-const NoBtn = styled.Text`
-    width:50%;
-    fontSize:24px;
-    padding:10px 0;
-    textAlign:center;
-    color:white;
-    backgroundColor:green;
 `;
 const ScoreText = styled.Text`
     fontSize:48px;
@@ -196,7 +188,7 @@ class Quiz extends React.Component {
 	        return (
 	            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <QuizNum>
-                        {index}/{num}
+                        COUNT: {num-index}
                     </QuizNum>
 		            <View>
 		            	<Animated.View style={[filpValue>=90?{opacity:0}:"",styles.flipCard, frontAnimatedStyle]}>
@@ -209,8 +201,8 @@ class Quiz extends React.Component {
 			            </Animated.View>
 			        </View>
 	            	<AnswerBar>
-    	            	<YesBtn onPress={()=>this.answerQuesion(1)}>YES</YesBtn>
-    	                <NoBtn onPress={()=>this.answerQuesion(0)}>NO</NoBtn>
+    	            	<ConfirmBtn onPress={()=>this.answerQuesion(1)}>YES</ConfirmBtn>
+    	                <ConfirmBtn style={[backgroundColor:green]} onPress={()=>this.answerQuesion(0)}>NO</ConfirmBtn>
                     </AnswerBar>
                 </View>
 	        );
