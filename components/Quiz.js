@@ -202,7 +202,7 @@ class Quiz extends React.Component {
 			        </View>
 	            	<AnswerBar>
     	            	<ConfirmBtn onPress={()=>this.answerQuesion(1)}>YES</ConfirmBtn>
-    	                <ConfirmBtn style={[{backgroundColor:green}]} onPress={()=>this.answerQuesion(0)}>NO</ConfirmBtn>
+    	                <ConfirmBtn style={{backgroundColor:green}} onPress={()=>this.answerQuesion(0)}>NO</ConfirmBtn>
                     </AnswerBar>
                 </View>
 	        );
