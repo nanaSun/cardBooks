@@ -4,7 +4,8 @@ To run the project:
 
 You just need to:
 
-yarn
+yarn install
+
 yarn start
 
 And then You can visit it on expo
